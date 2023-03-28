@@ -1,6 +1,6 @@
 
 var apiKey = 'b2fe5c6aeb86bd22e1997756c9b87a40';
-var city;
+var city = [];
 // var queryLatLon = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1' + '&appid=' + apiKey;
 // var queryWeather = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lattitude + '&lon=' + longitude + '&appid=' + apiKey;
 var title = document.querySelector('.title');
@@ -24,7 +24,7 @@ function getDay() {
 
 // ping api for lat/long and weather -- iterate through each day's weather and render to DOM
 function getWeather() {
-   fetch ('https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1' + '&appid=' + apiKey)
+   fetch ('https://api.openweathermap.org/geo/1.0/direct?q=' + city[i] + '&limit=1' + '&appid=' + apiKey)
         .then (function (response) {
             return response.json();
     })
@@ -61,25 +61,39 @@ function getWeather() {
     }
 )}
 
-// function getSelectors() {
-//     var tempEl = [];
-//     var humidityEl = [];
-//     var windEl = [];
-//     for (let i = 0; i < 6; i++) {
-//         tempEl[i] = document.querySelector(`#temp${i}`)
-//         humidityEl[i] = document.querySelector(`#humidity${i}`)
-//         windEl[i] = document.querySelector(`#wind${i}`)
-//     }
-// }
 
 var span = document.querySelector('#span');
 searchBtn.addEventListener('click', function() {
-    city = text.value
+    city[i] = text.value
+    cityName.textContent = city[i];
     getDay();
     getWeather();
-    cityName.textContent = city;
-    localStorage.setItem('search-history', city)
-    var historyBtn = document.createElement('button');
-    historyBtn.textContent = city;
-    span.appendChild(historyBtn);
+    getHistory();
 })
+
+// get new history buttons and local storage
+
+var historyBtn = [];
+var searchHistory = [];
+let i = 0;
+function getHistory() {
+    do {
+        historyBtn[i] = document.createElement('button');
+        historyBtn[i].textContent = city[i];
+        span.appendChild(historyBtn[i]);
+        searchHistory[i] = localStorage.setItem(`search-history${i}`, city[i]);
+        i++;
+        return;
+    } while (i >= 0 && i <= 10);
+}
+
+// function getHistory() {
+//     for (let i = 0; i < 10; i++) {
+//         historyBtn[i] = document.createElement('button');
+//         historyBtn[i].textContent = city;
+//         span.appendChild(historyBtn[i]);
+//         localStorage.setItem(`search-history${i}`, city);
+//         i++;
+//         return;  
+//     }
+// }
