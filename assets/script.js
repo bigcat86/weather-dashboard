@@ -9,19 +9,20 @@ var searchBtn = document.querySelector('#button-get');
 var text = document.querySelector('#floatingInput');
 var cityName = document.querySelector('#city-name');
 var search = document.querySelector('#seacrh');
-var today = dayjs().format('MM/DD/YY')
+var today = dayjs();
 
 // get each day of the forecast
-
 function getDay() {
     var day = [];
+    var cardDate = [];
     for (let i = 0; i < 6; i++) {
         day[i] = today.add(i, 'day');
-        console.log(day[i]);
+        cardDate[i] = document.querySelector(`#card-date${i}`);
+        cardDate[i].textContent = day[i].format('MM/DD/YY');
     }
 }
 
-
+// ping api for lat/long and weather -- iterate through each day's weather and render to DOM
 function getWeather() {
    fetch ('https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1' + '&appid=' + apiKey)
         .then (function (response) {
@@ -74,6 +75,7 @@ function getWeather() {
 var span = document.querySelector('#span');
 searchBtn.addEventListener('click', function() {
     city = text.value
+    getDay();
     getWeather();
     cityName.textContent = city;
     localStorage.setItem('search-history', city)
