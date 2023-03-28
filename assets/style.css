@@ -10,12 +10,14 @@ body {
     background-image: linear-gradient(to left, #56ccf2, #2f80ed);
 }
 
-
-
 #search {
     flex: 1 0 20vw;
     align-self: stretch;
     height: 500px;
+}
+
+span {
+    color: whitesmoke;
 }
 
 #button-get {
@@ -40,8 +42,13 @@ body {
 
 .card {
     flex: 0 0 15vw;
+    background-image: linear-gradient(to top right, rgb(100, 174, 247), white);
 }
 
 #weather1 {
     margin-left: 300px;
+}
+
+button {
+    width: 100%;
 }
