@@ -1,0 +1,47 @@
+#title {
+    height: 60px;
+    background-color: whitesmoke;
+    color: #0397f3;
+    text-align: center;
+    font-size: 4rem;
+}
+
+body {
+    background-image: linear-gradient(to left, #56ccf2, #2f80ed);
+}
+
+
+
+#search {
+    flex: 1 0 20vw;
+    align-self: stretch;
+    height: 500px;
+}
+
+#button-get {
+    background-color: rgb(146, 146, 146);
+    color: whitesmoke;
+    width: 100%;
+}
+
+#button-get:hover {
+    box-shadow: 0 0 10px whitesmoke;
+}
+
+#hero {
+    text-align: start;
+    color: whitesmoke;
+    flex: 1 0 75vw;
+    height: 500px;
+    border-radius: 50px;
+    box-shadow: 0 0 30px whitesmoke;
+    padding: 20px;
+}
+
+.card {
+    flex: 0 0 15vw;
+}
+
+#weather1 {
+    margin-left: 300px;
+}
