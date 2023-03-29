@@ -1,6 +1,5 @@
 
 var apiKey = 'b2fe5c6aeb86bd22e1997756c9b87a40';
-var city = [];
 // var queryLatLon = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1' + '&appid=' + apiKey;
 // var queryWeather = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lattitude + '&lon=' + longitude + '&appid=' + apiKey;
 var title = document.querySelector('.title');
@@ -24,7 +23,7 @@ function getDay() {
 
 // ping api for lat/long and weather -- iterate through each day's weather and render to DOM
 function getWeather() {
-   fetch ('https://api.openweathermap.org/geo/1.0/direct?q=' + city[i] + '&limit=1' + '&appid=' + apiKey)
+   fetch ('https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1' + '&appid=' + apiKey)
         .then (function (response) {
             return response.json();
     })
@@ -44,48 +43,73 @@ function getWeather() {
                     var windEl = [];
                     var imageEl = [];
                     for (let i = 0; i < 6; i++) {
-                        imageEl[i] = document.querySelector(`#image${i}`)
-                        tempEl[i] = document.querySelector(`#temp${i}`)
-                        humidityEl[i] = document.querySelector(`#humidity${i}`)
-                        windEl[i] = document.querySelector(`#wind${i}`)
-                        image[i] = data2.list[i].weather[0].icon
-                        temp[i] = Math.floor((data2.list[i].main.temp - 273.15) * (9/5) + 32)
-                        humidity[i] = data2.list[i].main.humidity
-                        wind[i] = data2.list[i].wind.speed
-                        imageEl[i].setAttribute('src', 'https://openweathermap.org/img/wn/' + image[i] + '@2x.png')
-                        tempEl[i].textContent = 'Temp: ' + temp[i] + ' °F'
-                        humidityEl[i].textContent = 'Humidity: ' + humidity[i] + ' %'
-                        windEl[i].textContent = 'Wind: ' + wind[i] + ' MPH'
+                        imageEl[i] = document.querySelector(`#image${i}`);
+                        tempEl[i] = document.querySelector(`#temp${i}`);
+                        humidityEl[i] = document.querySelector(`#humidity${i}`);
+                        windEl[i] = document.querySelector(`#wind${i}`);
+                        image[i] = data2.list[i].weather[0].icon;
+                        temp[i] = Math.floor((data2.list[i].main.temp - 273.15) * (9/5) + 32);
+                        humidity[i] = data2.list[i].main.humidity;
+                        wind[i] = data2.list[i].wind.speed;
+                        imageEl[i].setAttribute('src', 'https://openweathermap.org/img/wn/' + image[i] + '@2x.png');
+                        tempEl[i].textContent = 'Temp: ' + temp[i] + ' °F';
+                        humidityEl[i].textContent = 'Humidity: ' + humidity[i] + ' %';
+                        windEl[i].textContent = 'Wind: ' + wind[i] + ' MPH';
                     }
             }) 
     }
 )}
 
-
+var cityArr = [];
+var city;
+var historyArr = [];
+var historyBtn = [];
 var span = document.querySelector('#span');
 searchBtn.addEventListener('click', function() {
-    city[i] = text.value
-    cityName.textContent = city[i];
+    city = text.value;
+    cityName.textContent = city;
+    cityArr.push(city);
+    historyBtn = document.createElement('button');
+    historyBtn.textContent = city;
+    historyArr.push(historyBtn);
+    span.appendChild(historyBtn);
     getDay();
     getWeather();
-    getHistory();
+    for (let i = 0; i < cityArr.length; i++) {
+        localStorage.setItem(`search-history${i}`, cityArr[i]);
+        historyArr[i].addEventListener('click', function() {
+            city = cityArr[i];
+            cityName.textContent = city;
+            getWeather();
+        }
+    )}   
 })
 
-// get new history buttons and local storage
+// get city and log in local storage
+// function getCity() {
+//     let i = 0;
+//     do {
+//     city[i] = text.value;
+//     cityName.textContent = city[i];
+//     localStorage.setItem(`search-history${i}`, city[i]);
+//     i++;
+//     return city[i];  
+// } while (i >= 0 && i <= 10);
+// }
 
-var historyBtn = [];
-var searchHistory = [];
-let i = 0;
-function getHistory() {
-    do {
-        historyBtn[i] = document.createElement('button');
-        historyBtn[i].textContent = city[i];
-        span.appendChild(historyBtn[i]);
-        searchHistory[i] = localStorage.setItem(`search-history${i}`, city[i]);
-        i++;
-        return;
-    } while (i >= 0 && i <= 10);
-}
+
+// get new history buttons and local storage
+// var historyBtn = [];
+// function getHistory() {
+//     let i = 0;
+//     do {
+//         historyBtn[i] = document.createElement('button');
+//         historyBtn[i].textContent = cityArr[i];
+//         span.appendChild(historyBtn[i]);
+//         i++;
+//         return;
+//     } while (i >= 0 && i <= 10);
+// }
 
 // function getHistory() {
 //     for (let i = 0; i < 10; i++) {
@@ -95,5 +119,14 @@ function getHistory() {
 //         localStorage.setItem(`search-history${i}`, city);
 //         i++;
 //         return;  
+//     }
+// }
+
+// get weather when history is clicked
+// function clickHistory() {
+//     for (let i = 1; i < 10; i++) {
+//         historyArr[i].addEventListener('click', function() {
+//             getWeather();
+//         })    
 //     }
 // }
