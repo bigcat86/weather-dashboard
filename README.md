@@ -17,6 +17,6 @@ Challenge #6 - 5 Day Weather Forecast Dashboard
 - I learned how to properly call on an API, find data that I needed, and distribute that data using a function
 - Finally, I learned that is possible to combine two API calls in order to interpolate data from one call to another
 
-## Check out my site @ : 
+## Check out my site @ : https://bigcat86.github.io/weather-dashboard/
 
 ## Screenshots:
