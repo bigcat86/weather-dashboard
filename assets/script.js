@@ -23,7 +23,7 @@ function getDay() {
 
 // ping api for lat/long and weather -- iterate through each day's weather and render to DOM
 function getWeather() {
-   fetch ('https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1' + '&appid=' + apiKey)
+   fetch ('https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + apiKey)
         .then (function (response) {
             return response.json();
     })
@@ -47,10 +47,10 @@ function getWeather() {
                         tempEl[i] = document.querySelector(`#temp${i}`);
                         humidityEl[i] = document.querySelector(`#humidity${i}`);
                         windEl[i] = document.querySelector(`#wind${i}`);
-                        image[i] = data2.list[i].weather[0].icon;
-                        temp[i] = Math.floor((data2.list[i].main.temp - 273.15) * (9/5) + 32);
-                        humidity[i] = data2.list[i].main.humidity;
-                        wind[i] = data2.list[i].wind.speed;
+                        image[i] = data2.list[i * 7].weather[0].icon;
+                        temp[i] = Math.floor((data2.list[i * 7].main.temp - 273.15) * (9/5) + 32);
+                        humidity[i] = data2.list[i * 7].main.humidity;
+                        wind[i] = data2.list[i * 7].wind.speed;
                         imageEl[i].setAttribute('src', 'https://openweathermap.org/img/wn/' + image[i] + '@2x.png');
                         tempEl[i].textContent = 'Temp: ' + temp[i] + ' °F';
                         humidityEl[i].textContent = 'Humidity: ' + humidity[i] + ' %';
@@ -60,6 +60,8 @@ function getWeather() {
     }
 )}
 
+
+// add functionality foor search and create history buttons / local storage for searched cities
 var cityArr = [];
 var city;
 var historyArr = [];
@@ -85,48 +87,10 @@ searchBtn.addEventListener('click', function() {
     )}   
 })
 
-// get city and log in local storage
-// function getCity() {
-//     let i = 0;
-//     do {
-//     city[i] = text.value;
-//     cityName.textContent = city[i];
-//     localStorage.setItem(`search-history${i}`, city[i]);
-//     i++;
-//     return city[i];  
-// } while (i >= 0 && i <= 10);
-// }
-
-
-// get new history buttons and local storage
-// var historyBtn = [];
-// function getHistory() {
-//     let i = 0;
-//     do {
-//         historyBtn[i] = document.createElement('button');
-//         historyBtn[i].textContent = cityArr[i];
-//         span.appendChild(historyBtn[i]);
-//         i++;
-//         return;
-//     } while (i >= 0 && i <= 10);
-// }
-
-// function getHistory() {
-//     for (let i = 0; i < 10; i++) {
-//         historyBtn[i] = document.createElement('button');
-//         historyBtn[i].textContent = city;
-//         span.appendChild(historyBtn[i]);
-//         localStorage.setItem(`search-history${i}`, city);
-//         i++;
-//         return;  
-//     }
-// }
-
-// get weather when history is clicked
-// function clickHistory() {
-//     for (let i = 1; i < 10; i++) {
-//         historyArr[i].addEventListener('click', function() {
-//             getWeather();
-//         })    
-//     }
-// }
+// use "enter" key to search as well
+text.addEventListener('keydown', function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        searchBtn.click();
+    }
+})
