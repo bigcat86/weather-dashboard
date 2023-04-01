@@ -23,5 +23,5 @@ Challenge #6 - 5 Day Weather Forecast Dashboard
 ### Basic Layout:
 ![Screenshot 2023-04-01 at 5 18 51 PM](https://user-images.githubusercontent.com/122062578/229322641-6e9cf69b-6110-4ee6-99ef-1fb234e4a51e.png)
 
-###Search History and Local Storage:
+### Search History / Local Storage / Responsive Design:
 ![Screenshot 2023-04-01 at 5 18 27 PM](https://user-images.githubusercontent.com/122062578/229322644-6fc28735-1450-437a-8c80-78ed4ed067ed.png)
